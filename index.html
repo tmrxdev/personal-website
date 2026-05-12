@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>tmrx.lol</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+      <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+      <style>
+        body { font-family: 'JetBrains Mono', monospace; }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+        .blink { animation: blink 1s step-end infinite; }
+        #typeinput { position:absolute; opacity:0; pointer-events:none; width:1px; height:1px; }
+      </style>
+  </head>
+   <body class="bg-black text-green-400 min-h-screen p6 text-sm" onclick="focusInput()">
+     <input id="typeinput" type="text" autocomplete="off" spellcheck="false"/>
+     <div id="lines" class="whitespace-pre-wrap leading-relaxed"></div>
+     <div class="flex items-center" id-"prompt-row">
+       <span class="text-green-600">visitor</span><span class="text-white">@</span><span class ="text-cyan-400">tmrx.lol</span><span class="text-white">:</span><span class="text-blue-400">~</span><span class="text-white">$ </span>
+       <span id="typed-display" class="text-white"></span>
+       <span class="blink inline-block w-2 h-4 bg-green-400 align-middle ml-px"></span>
+      </div>
+          <script>
+    const input = document.getElementById('typeinput');
+    const linesEl = document.getElementById('lines');
+    const typedDisplay = document.getElementById('typed-display');
+ 
+    let typed = '';
+    let history = [];
+    let histIdx = -1;
+ 
+    const SITES = {
+      '1': { name: 'portfolio', url: 'https://tmrx.lol/portfolio', desc: 'personal work & projects' },
+      '2': { name: 'aware-investments-group', url: 'https://tmrx.lol/group', desc: 'finance & investment' },
+    };
+ 
+    function focusInput() { input.focus(); }
+    window.addEventListener('keydown', focusInput);
+    focusInput();
+ 
+    function esc(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+ 
+    function println(html = '') {
+      const d = document.createElement('div');
+      d.innerHTML = html;
+      linesEl.appendChild(d);
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+ 
+    function commitPrompt(cmd) {
+      println(`<span class="text-green-600">visitor</span><span class="text-white">@</span><span class="text-cyan-400">tmrx.lol</span><span class="text-white">:</span><span class="text-blue-400">~</span><span class="text-white">$ ${esc(cmd)}</span>`);
+    }
+ 
+    // intro
+    println(`<span class="text-white">Last login: Tue May 12 09:41:03 2026 on ttys001</span>`);
+    println();
+    println(`<span class="text-blue-400">  ████████╗███╗   ███╗██████╗ ██╗  ██╗</span>`);
+    println(`<span class="text-blue-400">     ██╔══╝████╗ ████║██╔══██╗╚██╗██╔╝</span>`);
+    println(`<span class="text-blue-400">     ██║   ██╔████╔██║██████╔╝ ╚███╔╝ </span>`);
+    println(`<span class="text-blue-400">     ██║   ██║╚██╔╝██║██╔══██╗ ██╔██╗ </span>`);
+    println(`<span class="text-blue-400">     ██║   ██║ ╚═╝ ██║██║  ██║██╔╝ ██╗</span>`);
+    println(`<span class="text-blue-400">     ╚═╝   ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝</span>`);
+    println();
+    println(`<span class="text-green-400">  hi! welcome to my little website.</span>`);
+    println(`<span class="text-white/60">  developer, designer and founder. from the netherlands.</span>`);
+    println();
+    println(`<span class="text-white/40">  ─────────────────────────────────────────</span>`);
+    println();
+    println(`<span class="text-white">  what are you curious about?</span>`);
+    println();
+    println(`  <span class="text-cyan-400 font-bold">[1]</span>  <span class="text-white">portfolio</span>               <span class="text-white/40">personal work & projects</span>`);
+    println(`  <span class="text-magenta-400 font-bold" style="color:#c084fc">[2]</span>  <span class="text-white">aware-investments-group</span> <span class="text-white/40">my ownership stakes and investments</span>`);
+    println();
+    println(`<span class="text-white/40">  type </span><span class="text-cyan-400">1</span><span class="text-white/40"> or </span><span style="color:#c084fc">2</span><span class="text-white/40"> and press enter</span>`);
+    println();
+ 
+    input.addEventListener('input', () => {
+      typed += input.value;
+      input.value = '';
+      typedDisplay.textContent = typed;
+    });
+ 
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace') {
+        typed = typed.slice(0, -1);
+        typedDisplay.textContent = typed;
+        e.preventDefault();
+        return;
+      }
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (histIdx < history.length - 1) histIdx++;
+        typed = history[histIdx] ?? '';
+        typedDisplay.textContent = typed;
+        return;
+      }
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        histIdx--;
+        typed = histIdx < 0 ? '' : history[histIdx] ?? '';
+        typedDisplay.textContent = typed;
+        return;
+      }
+      if (e.key === 'Enter') {
+        const cmd = typed.trim();
+        typed = '';
+        typedDisplay.textContent = '';
+        histIdx = -1;
+        if (cmd) {
+          history.unshift(cmd);
+          processCommand(cmd.toLowerCase());
+        } else {
+          commitPrompt('');
+          println();
+        }
+      }
+    });
+ 
+    function processCommand(cmd) {
+      commitPrompt(cmd);
+ 
+      if (SITES[cmd]) {
+        const site = SITES[cmd];
+        const color = cmd === '1' ? 'text-cyan-400' : 'text-purple-400';
+        println(`<span class="${color}">→ opening ${site.name}...</span>`);
+        println();
+        setTimeout(() => { window.location.href = site.url; }, 600);
+        return;
+      }
+ 
+      switch (cmd) {
+        case 'help':
+          println(`<span class="text-white/60">commands:</span>`);
+          println(`  <span class="text-cyan-400">1</span>        <span class="text-white/60">go to portfolio</span>`);
+          println(`  <span style="color:#c084fc">2</span>        <span class="text-white/60">go to aware-investments-group</span>`);
+          println(`  <span class="text-green-400">ls</span>       <span class="text-white/60">list sites</span>`);
+          println(`  <span class="text-green-400">clear</span>    <span class="text-white/60">clear terminal</span>`);
+          println(`  <span class="text-green-400">whoami</span>   <span class="text-white/60">current user</span>`);
+          println(`  <span class="text-green-400">help</span>     <span class="text-white/60">show this</span>`);
+          break;
+        case 'ls':
+          println(`<span class="text-cyan-400">portfolio</span>  <span style="color:#c084fc">aware-investments-group</span>`);
+          break;
+        case 'clear':
+          linesEl.innerHTML = '';
+          break;
+        case 'whoami':
+          println(`<span class="text-white">visitor</span>`);
+          break;
+         case 'funny':
+          println(`<span class="text-white">yes this is funny</span>`);
+          break;
+        case 'date':
+          println(`<span class="text-white/70">${new Date().toString()}</span>`);
+          break;
+        case 'pwd':
+          println(`<span class="text-white/70">/home/visitor</span>`);
+          break;
+        case 'uname':
+          println(`<span class="text-white/70">tmrx's website - i should make some version thing</span>`);
+          break;
+        default:
+          println(`<span class="text-red-400">bash: ${esc(cmd)}: command not found</span>`);
+      }
+ 
+      println();
+    }
+  </script>
+
+  </body>
+</html>
