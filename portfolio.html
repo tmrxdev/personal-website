@@ -29,8 +29,7 @@
     let histIdx = -1;
  
     const SITES = {
-      '1': { name: 'portfolio', url: 'https://tmrx.lol/portfolio', desc: 'personal work & projects' },
-      '2': { name: 'aware-investments-group', url: 'https://tmrx.lol/group', desc: 'finance & investment' },
+      'exit': { name: 'main site', url: 'https://tmrx.lol', desc: 'main website' },
     };
  
     function focusInput() { input.focus(); }
@@ -55,24 +54,30 @@
     // intro
     println(`<span class="text-white">Last login: Tue May 12 09:41:03 2026 on ttys001</span>`);
     println();
-    println(`<span class="text-blue-400">  ████████╗███╗   ███╗██████╗ ██╗  ██╗</span>`);
-    println(`<span class="text-blue-400">     ██╔══╝████╗ ████║██╔══██╗╚██╗██╔╝</span>`);
-    println(`<span class="text-blue-400">     ██║   ██╔████╔██║██████╔╝ ╚███╔╝ </span>`);
-    println(`<span class="text-blue-400">     ██║   ██║╚██╔╝██║██╔══██╗ ██╔██╗ </span>`);
-    println(`<span class="text-blue-400">     ██║   ██║ ╚═╝ ██║██║  ██║██╔╝ ██╗</span>`);
-    println(`<span class="text-blue-400">     ╚═╝   ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝</span>`);
-    println();
-    println(`<span class="text-green-400">  hello there! welcome to my little website.</span>`);
-    println(`<span class="text-white/60">  developer, designer and founder. from the netherlands.</span>`);
+    println(`<span class="text-blue-400">██████╗  ██████╗ ██████╗ ████████╗███████╗ ██████╗ ██╗     ██╗ ██████╗ </span>`);
+    println(`<span class="text-blue-400">██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔════╝██╔═══██╗██║     ██║██╔═══██╗</span>`);
+    println(`<span class="text-blue-400">██████╔╝██║   ██║██████╔╝   ██║   █████╗  ██║   ██║██║     ██║██║   ██║</span>`);
+    println(`<span class="text-blue-400">██╔═══╝ ██║   ██║██╔══██╗   ██║   ██╔══╝  ██║   ██║██║     ██║██║   ██║</span>`);
+    println(`<span class="text-blue-400">██║     ╚██████╔╝██║  ██║   ██║   ██║     ╚██████╔╝███████╗██║╚██████╔╝</span>`);
+    println(`<span class="text-blue-400">╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝      ╚═════╝ ╚══════╝╚═╝ ╚═════╝ </span>`);
     println();
     println(`<span class="text-white/40">  ─────────────────────────────────────────</span>`);
     println();
-    println(`<span class="text-white">  what are you curious about?</span>`);
+    println(`<span class="text-white">  >  current positions</span>`);
     println();
-    println(`  <span class="text-cyan-400 font-bold">[1]</span>  <span class="text-white">portfolio</span>               <span class="text-white/40">personal work & projects</span>`);
-    println(`  <span class="text-magenta-400 font-bold" style="color:#c084fc">[2]</span>  <span class="text-white">investments</span> <span class="text-white/40">my ownership stakes and investments</span>`);
+    println(`<span class="text-blue">  aware group - founder</span>`);
+    println(`<span class="text-blue">  internal group - founder & board member</span>`);
+    println(`<span class="text-blue">  polarnl - manager & lead designer</span>`);
+    println(`<span class="text-blue">  voltradio - founder</span>`);
+    println(`<span class="text-blue">  grid design - star team</span>`);
+    println(`<span class="text-blue">  loravae copyright & consulting - operations director i/c legal & takedowns</span>`);
+    println(`<span class="text-blue">  foodexpress - legal advisor & dmca agent</span>`);
+    println(`<span class="text-blue">  jumpplanet trampolining - co-founder</span>`);
     println();
-    println(`<span class="text-white/40">  type </span><span class="text-cyan-400">1</span><span class="text-white/40"> or </span><span style="color:#c084fc">2</span><span class="text-white/40"> and press enter</span>`);
+    println(`<span class="text-white">  >  former positions</span>`);
+    println(`<span class="text-blue">  stinger copyright - head of legal - resigned after acquisition</span>`);
+    println(`<span class="text-blue">  loravae copyright & consulting - operations director i/c legal & takedowns</span>`);
+    println(`<span class="text-blue">  jumpplanet trampolining (during joey era) - co-founder - resigned</span>`);
     println();
  
     input.addEventListener('input', () => {
